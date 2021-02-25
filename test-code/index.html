@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <title>Document</title>
+    <style>
+        span {
+  display: block;
+  width: 80px;
+  height: 100px;
+  background: lightgreen;
+}
+
+span.selected {
+  display: block;
+  width: 80px;
+  height: 100px;
+  background: lightcoral;
+}
+[class *= result] .selected {
+    border:2px dashed #000
+}
+
+.result-fail{
+}
+
+    </style>
+</head>
+<body>
+    <div class="match result-fail">
+        <div>
+          <input type="radio" name="g1" id="p1">
+          <label for="p1">승</label>
+          <span class="flag"></span>
+        </div>
+        <div>
+          <input type="radio" name="g1" id="p2">
+          <label for="p2">무</label>
+        </div>
+        <div>
+          <input type="radio" name="g1" id="p3" checked="checked">
+          <label for="p3">승</label>
+          <span class="flag"></span>
+        </div>
+      </div>
+
+      <div class="match finish">
+        <div>
+          <input type="radio" name="a1" id="h1" checked="checked">
+          <label for="h1">승</label>
+          <span class="flag"></span>
+        </div>
+        <div>
+          <input type="radio" name="a1" id="h2">
+          <label for="h2">무</label>
+        </div>
+        <div>
+          <input type="radio" name="a1" id="h3">
+          <label for="h3">승</label>
+          <span class="flag"></span>
+        </div>
+      </div>
+
+    <script>
+            $(document).ready(function(){
+
+                // 초기 선택된 팀 활성화
+                $('input').each(function(idx,item) {
+                    if($(item).is(":checked")){
+                        $(this).siblings().eq(1).addClass('selected')
+                    }
+                });
+
+                // 이벤트 종료시 비선택
+                $('.match').each(function(idx,item) {
+                    if($(item).hasClass("finish")){
+                            // $('.match').find('input').prop('readonly', true);
+                        $(this).closest('.match').find('input').attr('disabled', true);
+                    }
+                });
+
+                
+                
+            // $('input').is(":checked");
+
+            $('.match label').on('click', function(e){
+                // 클릭했을때 케이스 분기
+                    if($(this).closest('.match').hasClass('result-fail') || $(this).closest('.match').hasClass('finish') || $(this).closest('.match').hasClass('result-success')){
+                        return false;
+                    } else{
+                            // e.preventDefault();
+                        // e.stopPropagation();
+
+                        $(this).closest('.match').find('span').removeClass('selected')
+                        //클릭시 승, 무 확인
+                        if( $(this).next().is('span')){
+                            $(this).next('span').addClass('selected')// 선택 승
+                        }else{
+                            $(this).closest('.match').find('span').addClass('selected');// 무
+                        } 
+                    }
+            });
+           
+            
+            })
+    </script>
+</body>
+</html>
