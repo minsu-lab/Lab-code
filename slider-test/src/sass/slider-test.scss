@@ -1,0 +1,29 @@
+*{padding: 0;margin: 0;}
+ul,ol,li{list-style: none;}
+
+
+.slider-wrapper{
+    width: 1061px;
+    height: 527px;
+    outline: 1px solid gray;
+
+li{
+    position: absolute;
+    outline: 1px solid red;
+    float: left;
+    width: 132px;
+    height: 416px;
+    background: gray;
+    transition:  all .3s ease-out;
+    &.active{
+        width: 432px;
+        height: 527px;
+       
+    }
+    transition:  all .3s ease-out;
+}
+}
+
+.button-next,.button-prev{
+    font-size: 30px;
+}

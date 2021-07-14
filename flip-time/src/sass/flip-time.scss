@@ -1,0 +1,369 @@
+body{
+    margin: 0;
+   padding: 0;
+   background: teal;
+}
+
+
+.flip3D{
+    position: relative;
+    width: 240px; height: 200px;
+    margin: 10px;
+    cursor: pointer;
+    .back{
+        position: absolute;
+        transform: perspective(600px) rotateY( 180deg);
+        background: rgb(89, 87, 179);
+        width: 240px;
+        height: 200px;
+        border-radius: 7px;
+        transition: transform .5s cubic-bezier(0.18, 0.89, 0.2, 1.28) 0s;
+    }
+    .front{ 
+        position: absolute;
+        transform: perspective(600px) rotateY( 0deg);
+        background: #fc0;
+        width: 240px;
+        height: 200px;
+        border-radius: 7px;
+        transition: transform .5s cubic-bezier(0.18, 0.89, 0.2, 1.28) 0s;
+    }
+    &:hover{
+        .front{transform: perspective(600px) rotateY( -180deg);}
+        .back{transform: perspective(600px) rotateY( 0deg);}
+    }
+    
+}
+
+
+
+
+.flip{
+  
+    li{
+        width: 90px;
+        height: 110px;
+        font-size: 100px;
+        line-height: 100px;
+        position: absolute;
+        div{
+            z-index: 1;
+            outline: 1px solid red;
+            height:55px;
+            overflow: hidden;
+            perspective: 600px;
+            background: url('../../src/img/number.png') 0 0 no-repeat;
+            // transition: transform .5s linear 0s;
+            backface-visibility: hidden;
+            background-color:red;
+
+        }
+        .up{
+            height:55px;
+            transform-origin: bottom;
+            
+        }
+        .down{
+            height:55px;
+            transform-origin: top;
+            background-position: 0 100%;
+        }
+      
+        
+        
+        &[data-num="1"]{
+            >div{
+                background-position-x: -91px;
+            }
+        }
+    }
+
+    &.flipped{
+        li.before{
+            z-index: 1;
+            animation: flipIdx .5s .5s linear both;
+            .up{
+                transform: rotateX(0deg);
+            }
+            .down{
+                animation:flipBottom .5s .5s linear both;
+            }
+        }
+        li.active{
+            z-index: 2;
+            .up{
+                animation:flipTop .5s linear both;
+            }
+            .down{
+                transform: rotateX(0deg);
+            }
+        }
+       
+    }
+}
+
+@keyframes flipIdx{
+    0%{ z-index: 2;}
+    5%{ z-index: 4;}
+    100%{ z-index: 4;}
+}
+
+@keyframes flipTop{
+    0%{  transform: rotateX(0deg);}
+    100%{transform: rotateX(90deg);}
+}
+@keyframes flipBottom{
+    0%{ transform: rotateX(-90deg);}
+    100%{ transform: rotateX(0deg);}
+}
+///////////////////////@at-root
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+
+  background: teal;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flip-clock-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-size: 50px;
+    line-height: 0;
+  }
+  
+  .flip-clock-container * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  
+    cursor: default;
+  }
+  
+  .flip-clock {
+    display: flex;
+  
+    -webkit-perspective: 1000px;
+    -moz-perspective: 1000px;
+    perspective: 1000px;
+  }
+  
+  .digit {
+    position: relative;
+  
+    width: 45px;
+    height: 80px;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+
+    width: 90px;
+    height: 110px;
+    
+  }
+  
+  .digit-left {
+    margin-right: 1px;
+  }
+  
+  .digit-right {
+    margin-left: 1px;
+  }
+  
+  .digit::before, .up,
+  .digit::after, .down {
+    position: absolute;
+    z-index: 0;
+  
+    display: flex;
+    justify-content: center;
+  
+    width: 100%;
+    height: 50%;
+    overflow: hidden;
+    
+  }
+  
+  .digit::before, .up {
+    content: attr(data-digit-before);
+    bottom: 0;
+    align-items: flex-start;
+    background-position: 0 100%;
+  }
+  
+  .digit::after, .down {
+    content: attr(data-digit-after);
+    top: 0;
+    align-items: flex-end;
+  }
+  
+  .card {
+    position: relative;
+    z-index: 1;
+  
+    width: 100%;
+    height: 50%;
+  
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  
+    -webkit-transform-origin: bottom;
+    -moz-transform-origin: bottom;
+    transform-origin: bottom;
+  
+    -webkit-transform: rotateX(0);
+    -moz-transform: rotateX(0);
+    transform: rotateX(0);
+  
+    -webkit-transition: transform 0.7s ease-in-out;
+    -moz-transition: transform 0.7s ease-in-out;
+    transition: transform 0.7s ease-in-out;
+  }
+  
+  .card.flipped {
+    transform: rotateX(-180deg);
+  }
+  
+  .card-face {
+    position: absolute;
+  
+    display: flex;
+    justify-content: center;
+  
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  .card-face-front {
+    align-items: flex-end;
+  }
+  
+  .card-face-back {
+    align-items: flex-start;
+  
+    -webkit-transform: rotateX(-180deg);
+    -moz-transform: rotateX(-180deg);
+    transform: rotateX(-180deg);
+  }
+  
+  .digit::before, .up,
+  .digit::after, .down,
+  .card-face-front,
+  .card-face-back {
+    // background: white;
+    // color: black;
+    background: url('../../src/img/number.png') 0 0 no-repeat;
+    background-color:black;
+    text-indent: -9999em;
+  }
+
+  
+  
+  @for $i from 0 through 9 {
+
+    .digit[data-digit-before = '#{$i}']{
+        &::before,.up,
+        .card-face-front{
+            background-position-x: ($i * -91px);
+          }
+    }
+    
+
+    .digit[data-digit-after = '#{$i}']{
+        &::after,.down,
+        .card-face-back{
+            background-position-x: ($i * -91px);
+          }
+    }
+  }
+
+  .digit .up{
+    //   opacity: 0;
+  }
+  .digit .up.view{
+    // opacity: 1;
+}
+  .digit,
+  .digit::before, .up, .down,
+  .digit::after,
+  .card,
+  .card-face {
+    border-radius: 4px;
+  }
+  
+  .digit::before,.up,
+  .card-face-back {
+    // background-color: linear-gradient(0, #aaa, #ccc 50%, #fafafa);
+    // color: #212121;
+    background-position-y: 100%;
+    border-top: 1px solid black;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  
+  .digit::after,.down,
+  .card-face-front {
+    background-position-y: 0;
+    // background: linear-gradient(0, #aaa, #bbb 50%, #f5f5f5);
+    // color: #212121;
+    border-bottom: 1px solid black;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .digit-left,
+  .digit-left::before, .up,.down,
+  .digit-left::after,
+  .digit-left .card,
+  .digit-left .card-face {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .digit-right,
+  .digit-right::before,.up,.down,
+  .digit-right::after,
+  .digit-right .card,
+  .digit-right .card-face {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  
+  .colon {
+    color: black;
+    margin: 0 6px;
+    padding-bottom: 9px;
+  }
+  

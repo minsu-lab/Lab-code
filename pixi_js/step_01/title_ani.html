@@ -12,6 +12,7 @@
         canvas{
             display: block;
             background: blue;
+            position: absolute;
         }
     </style>
 </head>
@@ -28,7 +29,7 @@
                 height: window.innerHeight
             });
 
-            const texture = PIXI.Texture.from('tit.png');
+            const texture = PIXI.Texture.from('text.png');
             const img = new PIXI.Sprite(texture);
             img.x = app.renderer.width/2;
             img.y = app.renderer.height/2;
@@ -46,8 +47,9 @@
 
             let animation = gsap.timeline();
             // animation.from(img,{duration:3, opacity:0, pixi:{brightness:8,}, ease: 'Power4.easeOut'})
-            animation.from(img,{y:10,duration:2, opacity: 0, pixi:{rotation: "-70",scale:10,brightness:15,blur:50}, ease: 'Power4.easeOut'})
-            // .fromTo(img,{pixi:{brightness:3}},{duration:2,pixi:{brightness:1}, ease: 'Power4.easeOut'})
+            
+            // animation.from(img,{x: 20,y: -100,duration:2, opacity: 0, pixi:{brightness:15}, ease: 'Power4.easeOut'})
+            animation.fromTo(img,{y:0, pixi:{brightness:15}},{y:600,duration:4,pixi:{brightness:1}, ease: 'Power4.easeOut'})
             // .fromTo(canvas,{x:0},{duration:2,x:20, ease: 'Power4.easeOut'})
             
 
